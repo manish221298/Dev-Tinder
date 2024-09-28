@@ -3,20 +3,24 @@ const express = require('express')
 const app = express()
 const port = 4001
 
-app.use("/hello", (req, res) => {
-    res.send("Hello World")
+// app.use("/user", (req, res) => {
+
+//     const queryData = req.query
+//     res.send({"data is": queryData})
+// })
+
+app.use("/user/:id/:password", (req, res) => {
+
+    const paramsData = req.params
+    console.log(paramsData);
+    
+    res.send({"data is": paramsData})
 })
 
 
 
 
-app.use("/users", (req, res) => {
-    res.send("User will get in this route right?")
-})
 
-app.use("/emp", (req, res) => {
-    res.send("Emp will get in this route")
-})
 
 app.listen(port, () =>{
     console.log("Server is successully listen on port", port);
