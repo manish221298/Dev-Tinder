@@ -25,9 +25,17 @@ userController.register = async (req, res) => {
 userController.login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = User.findOne({ email });
+    const user = await User.findOne({ email });
 
-    return res.status(200).send(user);
+    if (!user) {
+      return res.status(401).send("Invald email or password");
+    }
+
+    const verifyPassord = await bcrypt.compare(password, user.password);
+
+    console.log(verifyPassord);
+
+    return res.status(200).send(verifyPassord);
   } catch (err) {
     return res.status(400).send(err.message);
   }
