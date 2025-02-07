@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const validateUsers = require("../utils/authValidator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const userController = {};
 
 userController.register = async (req, res) => {
@@ -31,11 +33,17 @@ userController.login = async (req, res) => {
       return res.status(401).send("Invald email or password");
     }
 
-    const verifyPassord = await bcrypt.compare(password, user.password);
+    // const verifyPassword = await bcrypt.compare(password, user.password);
+    const verifyPassword = await user.passwordVerify(password);
 
-    console.log(verifyPassord);
+    if (!verifyPassword) {
+      throw new Error("Invald email or password");
+    }
 
-    return res.status(200).send(verifyPassord);
+    // const token = await jwt.sign({ _id: user._id }, "Mandani2216");
+    const token = await user.getJWT();
+
+    return res.status(200).send({ token: token });
   } catch (err) {
     return res.status(400).send(err.message);
   }

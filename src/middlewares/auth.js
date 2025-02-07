@@ -1,15 +1,17 @@
- const adminAuth = (req, res, next) => {
-    const isAdmin = false
-    
+const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-    if(!isAdmin){
-        res.status(401).send("Admin is not Authorized")
-    }
-    else{
-        next()
-    }
+const authenticateUser = async (req, res, next) => {
+  const token = req.header("Authorization").split(" ")[1];
 
- }
+  try {
+    const tokenData = jwt.verify(token, "Mandani2216");
+    const user = await User.findById(tokenData._id);
+    req.user = user;
+    next();
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+};
 
-
- module.exports = { adminAuth }
+module.exports = authenticateUser;
