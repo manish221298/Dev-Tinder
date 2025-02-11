@@ -40,4 +40,6 @@ route.get(
   userDetailController.acceptedList
 );
 
+route.get("/feed", authenticateUser, userDetailController.feedApi);
+
 module.exports = route;
