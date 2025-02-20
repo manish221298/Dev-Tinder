@@ -6,7 +6,16 @@ const jwt = require("jsonwebtoken");
 const userController = {};
 
 userController.register = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    bio,
+    gender,
+    nationality,
+    photo,
+  } = req.body;
 
   try {
     validateUsers(email, password);
@@ -16,6 +25,10 @@ userController.register = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
+      bio,
+      gender,
+      nationality,
+      photo,
     });
     await user.save();
     return res.status(201).send("User Registered Successfully !");
@@ -43,7 +56,7 @@ userController.login = async (req, res) => {
     // const token = await jwt.sign({ _id: user._id }, "Mandani2216");
     const token = await user.getJWT();
 
-    return res.status(200).send({ token: token });
+    return res.status(200).send({ token: token, data: user });
   } catch (err) {
     return res.status(400).send(err.message);
   }

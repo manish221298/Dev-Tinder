@@ -20,6 +20,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  bio: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  nationality: {
+    type: String,
+  },
+  photo: {
+    type: String,
+  },
   skills: {
     type: [String],
   },

@@ -12,6 +12,7 @@ route.post("/user/signin", userController.login);
 
 // list of profile api
 route.get("/profile/list", authenticateUser, profileController.list);
+route.patch("/profile/update", authenticateUser, profileController.update);
 
 // connection request
 route.post(

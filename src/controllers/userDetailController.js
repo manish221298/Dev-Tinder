@@ -79,10 +79,9 @@ userDetailController.feedApi = async (req, res) => {
           { _id: { $ne: loggedInUser } },
         ],
       })
-      .select("firstName lastName email skills")
+      .select("firstName lastName email skills gender nationality photo bio ")
       .skip(skip)
       .limit(limit);
-    console.log(feedUsers);
 
     return res.status(200).json({ feedUsers });
   } catch (err) {
