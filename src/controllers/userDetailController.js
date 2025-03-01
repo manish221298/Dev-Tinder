@@ -20,7 +20,7 @@ userDetailController.list = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Pending requests are ", requestedData });
+      .json({ message: "Pending requests are ", data: requestedData });
   } catch (err) {
     return res.status(400).json({ message: err });
   }
@@ -42,9 +42,13 @@ userDetailController.acceptedList = async (req, res) => {
     if (!myConnection) {
       return res.json({ message: "Pending request not found" });
     }
-    return res
-      .status(200)
-      .json({ message: "Pending requests are ", myConnection });
+    const data = myConnection.map((row) => {
+      if (row.fromUserId._id.toString() === loggedInUser.toString()) {
+        return row.toUserId;
+      }
+      return row.fromUserId;
+    });
+    return res.status(200).json({ message: "Pending requests are ", data });
   } catch (err) {
     return res.status(400).json({ message: err });
   }

@@ -4,6 +4,7 @@ const userController = require("../controllers/userController");
 const profileController = require("../controllers/profileController");
 const connectionReqController = require("../controllers/connectionRequestController");
 const userDetailController = require("../controllers/userDetailController");
+const chatController = require("../controllers/chatController");
 
 const route = express.Router();
 
@@ -42,5 +43,8 @@ route.get(
 );
 
 route.get("/feed", authenticateUser, userDetailController.feedApi);
+
+// get chat data
+route.get("/chat/:targetUserId", authenticateUser, chatController.list);
 
 module.exports = route;
