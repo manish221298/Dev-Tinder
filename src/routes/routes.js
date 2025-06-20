@@ -5,6 +5,7 @@ const profileController = require("../controllers/profileController");
 const connectionReqController = require("../controllers/connectionRequestController");
 const userDetailController = require("../controllers/userDetailController");
 const chatController = require("../controllers/chatController");
+const questionController = require("../controllers/questionController");
 
 const route = express.Router();
 
@@ -46,5 +47,9 @@ route.get("/feed", authenticateUser, userDetailController.feedApi);
 
 // get chat data
 route.get("/chat/:targetUserId", authenticateUser, chatController.list);
+
+// questions related routes
+route.post("/question/create", questionController.create);
+route.get("/question/list", questionController.list);
 
 module.exports = route;
