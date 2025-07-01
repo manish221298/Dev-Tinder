@@ -6,6 +6,8 @@ const connectionReqController = require("../controllers/connectionRequestControl
 const userDetailController = require("../controllers/userDetailController");
 const chatController = require("../controllers/chatController");
 const questionController = require("../controllers/questionController");
+const quizSubmitController = require("../controllers/quizSubmitController");
+const uploadPdfController = require("../controllers/uploadPdfController");
 
 const route = express.Router();
 
@@ -49,7 +51,16 @@ route.get("/feed", authenticateUser, userDetailController.feedApi);
 route.get("/chat/:targetUserId", authenticateUser, chatController.list);
 
 // questions related routes
-route.post("/question/create", questionController.create);
-route.get("/question/list", questionController.list);
+route.post("/question/create", authenticateUser, questionController.create);
+route.get("/question/list", authenticateUser, questionController.list);
+
+route.post("/submit/quiz", authenticateUser, quizSubmitController.submitQuiz);
+route.get(
+  "/quiz/submissions",
+  authenticateUser,
+  quizSubmitController.getQuizSubmissions
+);
+route.get("/upload/question/pdf", uploadPdfController.create);
+route.post;
 
 module.exports = route;
