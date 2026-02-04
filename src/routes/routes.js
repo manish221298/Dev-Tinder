@@ -5,6 +5,7 @@ const profileController = require("../controllers/profileController");
 const connectionReqController = require("../controllers/connectionRequestController");
 const userDetailController = require("../controllers/userDetailController");
 const chatController = require("../controllers/chatController");
+const questionController = require("../controllers/questionsController");
 
 const route = express.Router();
 
@@ -46,5 +47,11 @@ route.get("/feed", authenticateUser, userDetailController.feedApi);
 
 // get chat data
 route.get("/chat/:targetUserId", authenticateUser, chatController.list);
+
+// Quiz related routes
+route.post("/upload/quiz/pdf", questionController.create)
+route.get("/quiz/list", questionController.list)
+route.get("/quiz/:id", questionController.getById)
+route.post("/quiz/submit", questionController.submit)
 
 module.exports = route;
