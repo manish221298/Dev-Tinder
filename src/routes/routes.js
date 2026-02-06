@@ -6,6 +6,7 @@ const connectionReqController = require("../controllers/connectionRequestControl
 const userDetailController = require("../controllers/userDetailController");
 const chatController = require("../controllers/chatController");
 const questionController = require("../controllers/questionsController");
+const resultController = require("../controllers/resultController");
 
 const route = express.Router();
 
@@ -52,6 +53,11 @@ route.get("/chat/:targetUserId", authenticateUser, chatController.list);
 route.post("/upload/quiz/pdf", questionController.create)
 route.get("/quiz/list", questionController.list)
 route.get("/quiz/:id", questionController.getById)
-route.post("/quiz/submit", questionController.submit)
+route.post("/quiz/submit", authenticateUser, questionController.submit)
+
+// Result related routes
+route.get("/result/sets", resultController.getSetDetails)
+route.get("/result/set/:quizSetId/users", resultController.getUserWiseResults)
+route.delete("/result/:resultId", resultController.deleteResult)
 
 module.exports = route;

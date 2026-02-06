@@ -9,7 +9,7 @@ const questionItemSchema = new mongoose.Schema({
 const questionSchema = new mongoose.Schema({
     setName: { type: String, required: true },
     questionSet: { type: String, required: true },
-    questions: { type: [questionItemSchema], required: true }
+    questions: { type: [questionItemSchema], required: true },
 })
 
 const QuestionBank = mongoose.model("QuestionBank", questionSchema)

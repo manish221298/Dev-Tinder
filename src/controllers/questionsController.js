@@ -127,12 +127,7 @@ questionController.submit = async (req, res) => {
 
         return res.status(200).json({
             message: "Quiz submitted successfully",
-            resultId: savedResult._id,
-            quizSetId: quizSetId,
-            totalQuestions: totalQuestions,
-            correctAnswers: correctCount,
-            incorrectAnswers: totalQuestions - correctCount,
-            score: parseFloat(score)
+            resultId: savedResult._id
         });
     } catch (err) {
         return res.status(500).json({ error: "Something went wrong while submitting the quiz.", err: err.message })
